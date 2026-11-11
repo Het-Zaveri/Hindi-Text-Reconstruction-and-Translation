@@ -1,0 +1,31 @@
+========================================================================
+MODEL 1: HINDI PUNCTUATION RESTORATION - CLASSIFICATION REPORT
+Model ID                     : Horizon-Labs/punctuation-restoration-small
+Model Revision               : 12b02a85b60a2843ad6f22e4248669f50aeecdbb
+Execution Device             : cpu (CPU)
+Actual GPU Memory Allocated  : N/A (CPU execution)
+Actual GPU Memory Reserved   : N/A (CPU execution)
+GPU Memory Compliance Status : NOT VERIFIED
+Total Reference Samples      : 55
+Valid Evaluated Samples      : 55
+Inference Failures           : 0
+========================================================================
+
+Class / Mark     Precision    Recall       F1-Score     Support 
+------------------------------------------------------------------------
+','              0.6667       0.2353       0.3478       17      
+'-'              1.0000       1.0000       1.0000       1       
+':'              0.0000       0.0000       0.0000       0       
+'?'              0.5714       0.5000       0.5333       8       
+'।'              0.9000       0.9574       0.9278       47      
+------------------------------------------------------------------------
+Micro Avg        0.7826       0.7397       0.7606       73      
+Macro Avg        -            -            0.7022       -       
+
+NONE (Word)      0.9815       0.9882       0.9848       591     
+
+========================================================================
+Word Preservation Accuracy   : 100.00%
+Exact Sequence Accuracy       : 70.91%
+High-Confidence Subset F1    : 78.26%
+========================================================================

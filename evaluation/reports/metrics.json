@@ -1,0 +1,114 @@
+{
+  "model_id": "Horizon-Labs/punctuation-restoration-small",
+  "model_revision": "12b02a85b60a2843ad6f22e4248669f50aeecdbb",
+  "total_samples": 55,
+  "valid_samples": 55,
+  "failed_samples": 0,
+  "exact_punctuation_accuracy": 0.7090909090909091,
+  "word_preservation_accuracy": 1.0,
+  "micro_precision": 0.782608695652174,
+  "micro_recall": 0.7397260273972602,
+  "micro_f1": 0.7605633802816901,
+  "macro_f1": 0.7022486179590617,
+  "high_confidence_subset": {
+    "total_samples": 48,
+    "exact_punctuation_accuracy": 0.75,
+    "micro_precision": 0.7894736842105263,
+    "micro_recall": 0.7758620689655172,
+    "micro_f1": 0.7826086956521741,
+    "macro_f1": 0.6172161172161172
+  },
+  "class_wise_metrics": {
+    "!": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "support": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0
+    },
+    ",": {
+      "precision": 0.6666666666666666,
+      "recall": 0.23529411764705882,
+      "f1_score": 0.3478260869565218,
+      "support": 17,
+      "tp": 4,
+      "fp": 2,
+      "fn": 13
+    },
+    "-": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "support": 1,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    ":": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "support": 0,
+      "tp": 0,
+      "fp": 5,
+      "fn": 0
+    },
+    ";": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "support": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0
+    },
+    "?": {
+      "precision": 0.5714285714285714,
+      "recall": 0.5,
+      "f1_score": 0.5333333333333333,
+      "support": 8,
+      "tp": 4,
+      "fp": 3,
+      "fn": 4
+    },
+    "_NONE_": {
+      "precision": 0.9815126050420168,
+      "recall": 0.988155668358714,
+      "f1_score": 0.9848229342327149,
+      "support": 591,
+      "tp": 584,
+      "fp": 11,
+      "fn": 7
+    },
+    "।": {
+      "precision": 0.9,
+      "recall": 0.9574468085106383,
+      "f1_score": 0.9278350515463918,
+      "support": 47,
+      "tp": 45,
+      "fp": 5,
+      "fn": 2
+    },
+    "॥": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1_score": 0.0,
+      "support": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0
+    }
+  },
+  "device_info": {
+    "device": "cpu",
+    "cuda_available": false,
+    "device_name": "CPU",
+    "gpu_memory_compliance": "NOT VERIFIED",
+    "actual_gpu_allocated_MB": null,
+    "actual_gpu_reserved_MB": null,
+    "notes": "Executed on CPU. Dedicated CUDA GPU is unavailable in this environment; actual GPU memory was not measured, and GPU memory compliance (<= 1.5 GB limit) is NOT VERIFIED.",
+    "compliant_1_5gb": null
+  }
+}
