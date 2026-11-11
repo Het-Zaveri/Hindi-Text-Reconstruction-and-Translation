@@ -34,7 +34,7 @@ The project is structured into three consecutive NLP stages:
 ---
 
 ### 2. Dataset Creation Methodology
-To evaluate Model 1 independently from model predictions:
+The evaluation uses a separate reference set of 55 segments:
 - **Corpus Extraction**: Extracted 55 representative Hindi sentence and utterance segments across all seven source files in the project (`sample-1.txt` to `sample-7.txt`).
 - **Domain Coverage**:
   - Religious and cultural narratives (`sample-1.txt`, `sample-2.txt`)
