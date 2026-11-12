@@ -1,0 +1,74 @@
+{
+  "status": "PILOT_AND_FULL_DATASET_COMPLETED",
+  "model_id": "ai4bharat/indictrans2-indic-en-dist-200M",
+  "license": "MIT",
+  "parameter_count": 211780608,
+  "model_snapshot_file_count": 27,
+  "model_snapshot_size_bytes": 921510625,
+  "model_snapshot_size_mb_decimal": 921.51,
+  "model_snapshot_size_mib": 879.18,
+  "pilot": {
+    "sentence_count": 5,
+    "group_count": 1,
+    "beam_size": 5,
+    "tokenizer_load_seconds": 1.7714,
+    "model_load_seconds": 4.5298,
+    "inference_seconds": 4.0713,
+    "peak_working_set_mb": 1182.45,
+    "empty_outputs": 0,
+    "errors": 0,
+    "truncated": 0,
+    "translation_quality": "UNVALIDATED; promising with a notable Garhmukteshwar spelling artifact"
+  },
+  "dataset": {
+    "files_processed": 7,
+    "sentence_counts": {
+      "sample-1": 49,
+      "sample-2": 49,
+      "sample-3": 47,
+      "sample-4": 50,
+      "sample-5": 52,
+      "sample-6": 45,
+      "sample-7": 52
+    },
+    "total_sentences": 344,
+    "group_size": 5,
+    "groups_processed": 71,
+    "inference_seconds_sum": 371.4755,
+    "throughput_sentences_per_inference_second": 0.9258,
+    "errors": 0,
+    "empty_outputs": 0,
+    "truncated": 0,
+    "quality_status": "UNVALIDATED",
+    "malformed_u093c_fragment_count": 37,
+    "malformed_u093c_fragment_by_sample": {
+      "sample-1": 2,
+      "sample-2": 1,
+      "sample-4": 7,
+      "sample-5": 14,
+      "sample-7": 13
+    },
+    "safe_correction_applied": false,
+    "safe_correction_reason": "Fragments occur in varying word contexts and semantic errors are present; blind deletion or replacement is not safe without reference translations."
+  },
+  "dataset_runs": [
+    {"sample":"sample-1","sentences":49,"groups":10,"tokenizer_load_seconds":1.4427,"model_load_seconds":4.8484,"inference_seconds":52.8163,"peak_working_set_mb":1546.33},
+    {"sample":"sample-2","sentences":49,"groups":10,"tokenizer_load_seconds":1.7333,"model_load_seconds":4.6421,"inference_seconds":53.4574,"peak_working_set_mb":1805.24},
+    {"sample":"sample-3","sentences":47,"groups":10,"tokenizer_load_seconds":1.9332,"model_load_seconds":5.1878,"inference_seconds":50.8322,"peak_working_set_mb":1589.57},
+    {"sample":"sample-4","sentences":50,"groups":10,"tokenizer_load_seconds":1.6010,"model_load_seconds":4.6441,"inference_seconds":60.5237,"peak_working_set_mb":1525.26},
+    {"sample":"sample-5","sentences":52,"groups":11,"tokenizer_load_seconds":1.5580,"model_load_seconds":4.4327,"inference_seconds":68.7974,"peak_working_set_mb":1584.48},
+    {"sample":"sample-6","sentences":45,"groups":9,"tokenizer_load_seconds":1.6106,"model_load_seconds":5.1435,"inference_seconds":31.5571,"peak_working_set_mb":1545.31},
+    {"sample":"sample-7","sentences":52,"groups":11,"tokenizer_load_seconds":1.6563,"model_load_seconds":4.7676,"inference_seconds":53.4914,"peak_working_set_mb":1611.27}
+  ],
+  "environment": {
+    "python": "3.12.10",
+    "torch": "2.6.0+cpu",
+    "transformers": "4.51.3",
+    "numpy": "2.1.3",
+    "sentencepiece": "0.2.0",
+    "IndicTransToolkit": "1.1.1",
+    "pip_check": "PASS"
+  },
+  "gpu_memory_compliance": "NOT VERIFIED",
+  "recommendation": "CANDIDATE NOT ACCEPTABLE - TRANSLATION QUALITY POOR"
+}

@@ -1,0 +1,117 @@
+{
+  "status": "COMPLETED",
+  "benchmark_subset_size": 12,
+  "full_sample1_sentence_count": 49,
+  "expected_sentence_count": 49,
+  "content_hash": "3a8c2c50d3a904dd",
+  "nsp_head_verification": {
+    "model_id": "google-bert/bert-base-multilingual-cased",
+    "device": "cpu",
+    "head_name": "cls.seq_relationship",
+    "head_type": "<class 'torch.nn.modules.linear.Linear'>",
+    "weight_shape": [
+      2,
+      768
+    ],
+    "bias_shape": [
+      2
+    ],
+    "weight_norm": 0.4678,
+    "bias_norm": 0.0382,
+    "missing_keys_count": 0,
+    "mismatched_keys_count": 0,
+    "unexpected_keys_count": 5,
+    "status": "VERIFIED_PRETRAINED",
+    "notes": "Pretrained NSP classification head verified. 5 unexpected keys correspond to Masked LM prediction heads, which are expectedly ignored for the NextSentencePrediction architecture."
+  },
+  "truncation": {
+    "max_length": 64,
+    "pairs_exceeding_max_length": 38,
+    "total_pairs": 132,
+    "truncation_rate": 0.2879
+  },
+  "benchmarks": [
+    {
+      "batch_size": 8,
+      "sentence_count": 12,
+      "total_pairs": 132,
+      "matrix_shape": [
+        12,
+        12
+      ],
+      "elapsed_seconds": 44.7252,
+      "pairs_per_sec": 2.95,
+      "asymmetry_ok": true,
+      "asymmetry_violations": 0,
+      "max_length": 64,
+      "device": "cpu",
+      "truncated_pairs": 38,
+      "truncation_rate": 0.2879,
+      "sample_scores": {
+        "M[0,1]": -3.4176,
+        "M[1,0]": -2.7798,
+        "asymmetric_0_1": true
+      }
+    },
+    {
+      "batch_size": 16,
+      "sentence_count": 12,
+      "total_pairs": 132,
+      "matrix_shape": [
+        12,
+        12
+      ],
+      "elapsed_seconds": 33.2993,
+      "pairs_per_sec": 3.96,
+      "asymmetry_ok": true,
+      "asymmetry_violations": 0,
+      "max_length": 64,
+      "device": "cpu",
+      "truncated_pairs": 38,
+      "truncation_rate": 0.2879,
+      "sample_scores": {
+        "M[0,1]": -3.4176,
+        "M[1,0]": -2.7798,
+        "asymmetric_0_1": true
+      }
+    },
+    {
+      "batch_size": 32,
+      "sentence_count": 12,
+      "total_pairs": 132,
+      "matrix_shape": [
+        12,
+        12
+      ],
+      "elapsed_seconds": 28.374,
+      "pairs_per_sec": 4.65,
+      "asymmetry_ok": true,
+      "asymmetry_violations": 0,
+      "max_length": 64,
+      "device": "cpu",
+      "truncated_pairs": 38,
+      "truncation_rate": 0.2879,
+      "sample_scores": {
+        "M[0,1]": -3.4176,
+        "M[1,0]": -2.7798,
+        "asymmetric_0_1": true
+      }
+    }
+  ],
+  "extrapolation": {
+    "best_batch_size": 32,
+    "best_rate_pairs_per_sec": 4.65,
+    "full_sample1_pairs": 2352,
+    "estimated_seconds_per_file": 505.81,
+    "estimated_seconds_7_files": 3540.65,
+    "note": "Extrapolation only. 7-file run not executed."
+  },
+  "package_versions": {
+    "transformers": "4.49.0",
+    "tokenizers": "0.21.0",
+    "huggingface_hub": "0.36.2",
+    "torch": "2.14.0+cpu",
+    "sentence_transformers": "5.7.0",
+    "numpy": "2.5.2"
+  }
+}

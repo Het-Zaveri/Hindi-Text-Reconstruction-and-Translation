@@ -1,0 +1,87 @@
+{
+  "model_id": "ai4bharat/indictrans2-indic-en-dist-200M",
+  "device": "cpu",
+  "source_language": "hin_Deva",
+  "target_language": "eng_Latn",
+  "input_file": "outputs\\pipeline_final\\sample-1_final_output.txt",
+  "sentence_count": 5,
+  "group_size": 5,
+  "group_count": 1,
+  "num_beams": 5,
+  "parameter_count": 211780608,
+  "tokenizer_load_seconds": 1.7713683999609202,
+  "model_load_seconds": 4.529833399981726,
+  "inference_seconds": 4.071301000018138,
+  "batch_inference_seconds": [
+    4.071301000018138
+  ],
+  "sentences": [
+    {
+      "sentence_index": 1,
+      "group_index": 1,
+      "hindi": "उस समय गढ़ मुक्तेश्वर बल्लभ संप्रदाय का मुख्य केन्द्र था।",
+      "english": "At that time Garh\\ u093C was the main center of the Mukteshwar Ballabh sect.",
+      "source_token_count": 20,
+      "output_token_count": 25,
+      "generation_seconds": 0.8142602000036276,
+      "empty_output": false,
+      "truncated": false,
+      "error": null,
+      "batch_generation_seconds": 4.071301000018138
+    },
+    {
+      "sentence_index": 2,
+      "group_index": 1,
+      "hindi": "गढ़ मुक्तेश्वर का नाम शिव बल्लभपुर पड़ा।",
+      "english": "Garh\\ u093C Mukteshwar got the name Shiv Ballabhpur.",
+      "source_token_count": 18,
+      "output_token_count": 19,
+      "generation_seconds": 0.8142602000036276,
+      "empty_output": false,
+      "truncated": false,
+      "error": null,
+      "batch_generation_seconds": 4.071301000018138
+    },
+    {
+      "sentence_index": 3,
+      "group_index": 1,
+      "hindi": "ज्ञात रहे कि शिव बल्लभपुर को ही अब गढ़ मुक्तेश्वर के नाम से जाना जाता है।",
+      "english": "It may be noted that Shiv Ballabhpur itself is now known as Garh Mukteshwar.",
+      "source_token_count": 22,
+      "output_token_count": 21,
+      "generation_seconds": 0.8142602000036276,
+      "empty_output": false,
+      "truncated": false,
+      "error": null,
+      "batch_generation_seconds": 4.071301000018138
+    },
+    {
+      "sentence_index": 4,
+      "group_index": 1,
+      "hindi": "महाराज शिव ने भगवान परशुराम से यहाँ शिव मंदिर की स्थापना कराई थी।",
+      "english": "Maharaj Shiva got Lord Parshuram to establish a Shiva temple here.",
+      "source_token_count": 17,
+      "output_token_count": 18,
+      "generation_seconds": 0.8142602000036276,
+      "empty_output": false,
+      "truncated": false,
+      "error": null,
+      "batch_generation_seconds": 4.071301000018138
+    },
+    {
+      "sentence_index": 5,
+      "group_index": 1,
+      "hindi": "गंगा किनारे यह भगवान शंकर की प्रसिद्ध पुरी है।",
+      "english": "It is the famous Puri of Lord Shankar on the banks of the Ganges.",
+      "source_token_count": 13,
+      "output_token_count": 16,
+      "generation_seconds": 0.8142602000036276,
+      "empty_output": false,
+      "truncated": false,
+      "error": null,
+      "batch_generation_seconds": 4.071301000018138
+    }
+  ],
+  "peak_working_set_mb": 1182.45,
+  "quality_status": "UNVALIDATED"
+}

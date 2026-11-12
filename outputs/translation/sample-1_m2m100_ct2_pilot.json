@@ -1,0 +1,95 @@
+{
+  "model_id": "facebook/m2m100_418M",
+  "engine": "CTranslate2",
+  "quantization": "INT8",
+  "device": "cpu",
+  "compute_type": "int8",
+  "intra_threads": 4,
+  "beam_size": 4,
+  "model_dir": "models\\model3_m2m100_ct2",
+  "model_dir_size_bytes": 493592607,
+  "model_dir_size_mb": 470.73,
+  "approx_parameter_count": 418457600,
+  "python_version": "3.12.10",
+  "packages": {
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.2",
+    "ctranslate2": "4.9.0"
+  },
+  "source_file": "outputs\\pipeline_final\\sample-1_final_output.txt",
+  "sentence_count": 5,
+  "original_sentences": [
+    "उस समय गढ़ मुक्तेश्वर बल्लभ संप्रदाय का मुख्य केन्द्र था।",
+    "गढ़ मुक्तेश्वर का नाम शिव बल्लभपुर पड़ा।",
+    "ज्ञात रहे कि शिव बल्लभपुर को ही अब गढ़ मुक्तेश्वर के नाम से जाना जाता है।",
+    "महाराज शिव ने भगवान परशुराम से यहाँ शिव मंदिर की स्थापना कराई थी।",
+    "गंगा किनारे यह भगवान शंकर की प्रसिद्ध पुरी है।"
+  ],
+  "combined_input_text": "उस समय गढ़ मुक्तेश्वर बल्लभ संप्रदाय का मुख्य केन्द्र था। गढ़ मुक्तेश्वर का नाम शिव बल्लभपुर पड़ा। ज्ञात रहे कि शिव बल्लभपुर को ही अब गढ़ मुक्तेश्वर के नाम से जाना जाता है। महाराज शिव ने भगवान परशुराम से यहाँ शिव मंदिर की स्थापना कराई थी। गंगा किनारे यह भगवान शंकर की प्रसिद्ध पुरी है।",
+  "combined_source_token_count": 94,
+  "model_max_length": 1024,
+  "is_truncated": false,
+  "timings": {
+    "model_loading_seconds": 2.5116,
+    "tokenizer_loading_seconds": 5.0676,
+    "combined_standard_inference_seconds": 17.5703,
+    "combined_penalized_inference_seconds": 7.4835,
+    "individual_inference_seconds": 4.649,
+    "total_inference_seconds": 29.7027
+  },
+  "memory_mb": {
+    "baseline_working_set": 17.23,
+    "after_model_load_working_set": 770.39,
+    "peak_working_set": 1089.02
+  },
+  "translations": {
+    "combined_standard_beam": "At that time, the main center of the Buddha was the Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha Buddha",
+    "combined_with_repetition_penalty": "At that time, the main center of the Buddha was the Buddhist Church. The Buddha's name was Shiva Bullbapur. It was known that Shiva Ballbapur is only now known by the name of Buddha. Maharashtra Shiva had established Shiva Temple here from God Parshuram.",
+    "individual_sentences": [
+      {
+        "index": 1,
+        "hindi": "उस समय गढ़ मुक्तेश्वर बल्लभ संप्रदाय का मुख्य केन्द्र था।",
+        "english": "At that time, it was the main center of the bullshit community.",
+        "tokens": 21
+      },
+      {
+        "index": 2,
+        "hindi": "गढ़ मुक्तेश्वर का नाम शिव बल्लभपुर पड़ा।",
+        "english": "The name of Shiva was Shiva.",
+        "tokens": 18
+      },
+      {
+        "index": 3,
+        "hindi": "ज्ञात रहे कि शिव बल्लभपुर को ही अब गढ़ मुक्तेश्वर के नाम से जाना जाता है।",
+        "english": "It is known that Shiva is now known by the name of the God.",
+        "tokens": 27
+      },
+      {
+        "index": 4,
+        "hindi": "महाराज शिव ने भगवान परशुराम से यहाँ शिव मंदिर की स्थापना कराई थी।",
+        "english": "Maharaj Shiva established the Shiva Temple here from God Perchuram.",
+        "tokens": 20
+      },
+      {
+        "index": 5,
+        "hindi": "गंगा किनारे यह भगवान शंकर की प्रसिद्ध पुरी है।",
+        "english": "This is the famous Puri of God Shankar.",
+        "tokens": 16
+      }
+    ]
+  },
+  "character_counts": {
+    "source_hindi_combined": 283,
+    "combined_penalized_english": 254
+  },
+  "quality_observations": {
+    "combined_standard_beam": "Suffered degeneration loop ('Buddha Buddha Buddha...') repeating until max length.",
+    "combined_penalized": "Avoided loop but hallucinated 'Buddha' and 'Buddhist Church', converted 'महाराज शिव' to 'Maharashtra Shiva', and dropped sentence 5.",
+    "individual_sentence_1": "Mistranslated religious term 'बल्लभ संप्रदाय' into vulgar English phrase 'bullshit community'.",
+    "individual_sentence_2": "Mangled into tautological 'The name of Shiva was Shiva.'",
+    "individual_sentence_3": "Mangled into 'It is known that Shiva is now known by the name of the God.'",
+    "individual_sentence_4": "Preserved basic intent ('Maharaj Shiva established the Shiva Temple here from God Perchuram') with transliteration error ('Perchuram').",
+    "individual_sentence_5": "Reasonable literal translation ('This is the famous Puri of God Shankar.')."
+  },
+  "recommendation": "CANDIDATE NOT ACCEPTABLE - TRANSLATION QUALITY POOR"
+}

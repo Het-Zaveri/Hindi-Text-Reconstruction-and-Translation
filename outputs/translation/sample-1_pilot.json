@@ -1,0 +1,19 @@
+{
+  "model_id": "Helsinki-NLP/opus-mt-hi-en",
+  "device": "cpu",
+  "source_file": "outputs\\pipeline_final\\sample-1_final_output.txt",
+  "sentence_count": 5,
+  "original_sentences": [
+    "उस समय गढ़ मुक्तेश्वर बल्लभ संप्रदाय का मुख्य केन्द्र था।",
+    "गढ़ मुक्तेश्वर का नाम शिव बल्लभपुर पड़ा।",
+    "ज्ञात रहे कि शिव बल्लभपुर को ही अब गढ़ मुक्तेश्वर के नाम से जाना जाता है।",
+    "महाराज शिव ने भगवान परशुराम से यहाँ शिव मंदिर की स्थापना कराई थी।",
+    "गंगा किनारे यह भगवान शंकर की प्रसिद्ध पुरी है।"
+  ],
+  "combined_input_text": "उस समय गढ़ मुक्तेश्वर बल्लभ संप्रदाय का मुख्य केन्द्र था। गढ़ मुक्तेश्वर का नाम शिव बल्लभपुर पड़ा। ज्ञात रहे कि शिव बल्लभपुर को ही अब गढ़ मुक्तेश्वर के नाम से जाना जाता है। महाराज शिव ने भगवान परशुराम से यहाँ शिव मंदिर की स्थापना कराई थी। गंगा किनारे यह भगवान शंकर की प्रसिद्ध पुरी है।",
+  "source_token_count": 83,
+  "model_max_length": 512,
+  "is_truncated": false,
+  "inference_time_seconds": 3.316,
+  "english_translation": "The fortress was then the center of a free God-star sect, and the name of the God of gods was found in the Shivpurpur. It was known that the Shivpur is now known as the Freema of Freema."
+}
