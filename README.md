@@ -1,19 +1,20 @@
 # Hindi Text Reconstruction and Translation
 
-A comprehensive NLP pipeline designed to process unpunctuated, unordered Hindi text, reconstruct coherent sentences, and translate them into English.
+This repository studies a three-stage workflow for raw, shuffled Hindi text: restore punctuation, order the resulting sentences, and evaluate Hindi-to-English translation. Models 1 and 2 form the implemented Hindi reconstruction pipeline. Model 3 is a separate translation experiment; the tested IndicTrans2 candidate produced malformed text and is **not acceptable as final translation output**.
 
-## Project Architecture & Roadmap
+The project combines pretrained models with custom preprocessing, search, orchestration, and integrity checks. It is a research prototype, not a validated production translator.
 
-The project is structured into three consecutive NLP stages:
+## Key features
 
-1. **Model 1: Hindi Punctuation Restoration** *(Active / Evaluated)*
-   - Restores grammatical sentence-terminal punctuation (Purna Viram `।`, Prashna Chinha `?`) and internal punctuation (Alpa Viram `,`, Hyphen `-`, Colon `:`) into raw unpunctuated Hindi text.
-2. **Model 2: Sentence Ordering and Reconstruction** *(Next Phase)*
-   - Segments punctuated text into individual sentences and orders shuffled sentence segments into coherent paragraphs.
-3. **Model 3: Hindi-to-English Translation** *(Future Phase)*
-   - Translates coherent groups of five ordered Hindi sentences into natural English.
+- Hindi punctuation restoration with word-preservation evaluation.
+- Sentence segmentation at Devanagari danda, question mark, exclamation mark, and line boundaries.
+- Multilingual sentence embeddings and pairwise cosine-similarity scoring.
+- Heuristic sentence-order reconstruction with exact search for short inputs and beam search for longer inputs.
+- Sentence IDs, source-to-output mappings, and exact sentence-preservation checks.
+- An experimental Hindi-to-English translation evaluation using five-sentence batches.
+- CPU-based development and regression testing; no NVIDIA GPU was available for verification.
 
----
+## Architecture
 
 ## Model 1: Hindi Punctuation Restoration and Evaluation
 
@@ -143,16 +144,135 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-### Run Evaluation Pipeline
-```bash
-# Run fresh inference and generate all reports
-python evaluation/evaluate.py --force-inference
+The main pipeline in `src/pipeline.py` runs Models 1 and 2 only. Its `--method minilm` mode selects MiniLM; the default `compare` mode additionally runs a directional mBERT next-sentence-prediction experiment. Translation is invoked separately after reconstruction. For the MiniLM score, cosine similarity is symmetric and indicates semantic affinity, not transition direction.
 
-# Re-run metrics from verified existing predictions cache
-python evaluation/evaluate.py --skip-inference
+## Models and status
+
+| Stage | Model | Architecture and verified specification | Language/task | Status |
+|---|---|---|---|---|
+| 1 | [Horizon-Labs/punctuation-restoration-small](https://huggingface.co/Horizon-Labs/punctuation-restoration-small) | mmBERT-small token-classification model; about 140M parameters per model card; Apache-2.0 | Multilingual punctuation restoration; Hindi tested here | Implemented and evaluated; 55-record reference set is provisional |
+| 2 | [paraphrase-multilingual-MiniLM-L12-v2](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) | 12-layer BERT-family encoder; hidden size 384; mean pooling to 384-dimensional sentence embeddings; Apache-2.0 | Sentence embeddings across 50 languages, including Hindi | Selected practical ordering heuristic; integrity checked, ordering accuracy unknown |
+| 2 comparison | [bert-base-multilingual-cased](https://huggingface.co/google-bert/bert-base-multilingual-cased) | BERT encoder with NSP head loaded and verified by project code | Directional next-sentence scoring | Experimental comparison method, not the selected primary method |
+| 3 experiment | [IndicTrans2 Indic-En Distilled 200M](https://huggingface.co/ai4bharat/indictrans2-indic-en-dist-200M) | Encoder-decoder translation model; model card calls it distilled 200M; loaded checkpoint has 211,780,608 parameters; MIT | Hindi `hin_Deva` to English `eng_Latn` | Rejected for final-quality use: 37/344 outputs contain malformed `u093C` fragments; other semantic errors; all outputs UNVALIDATED |
+| 3 rejected | [Helsinki-NLP/opus-mt-hi-en](https://huggingface.co/Helsinki-NLP/opus-mt-hi-en) | OPUS-MT transformer-align/Marian model; parameter count not stated on the card; Apache-2.0 | Hindi to English | Pilot rejected for malformed, incomplete translation |
+| 3 rejected | [facebook/m2m100_418M](https://huggingface.co/facebook/m2m100_418M) | Multilingual encoder-decoder; 418M variant; MIT | Many-to-many translation across 100 languages, including Hindi and English | Pilot rejected for repetition loop and severe mistranslations |
+
+Model specifications above come from the linked model cards and, for IndicTrans2 runtime parameter count and output measurements, the local benchmark. Check [Models](docs/MODELS.md) for caveats and sources. No model is claimed to meet the 1.5 GB GPU-memory target: **GPU-memory compliance: NOT VERIFIED**.
+
+## Method overview
+
+### 1. Punctuation restoration
+
+`src/run_on_dataset.py` loads the model publisher's `punctuate.py` helper, cleans whitespace and `NULL` placeholders, and processes each `data/*.txt` file. The model predicts punctuation labels after tokens; its helper reconstructs text and maps sentence-ending periods to Devanagari danda where appropriate. The evaluation compares word-boundary punctuation against a provisional 55-record annotation set. Detailed results and annotation limitations are in [Evaluation](docs/EVALUATION.md).
+
+### 2. Sentence ordering
+
+`src/model2_ordering.py` splits punctuated text on line boundaries or whitespace after `।`, `?`, or `!`, assigns stable sentence IDs, and obtains normalized 384-dimensional MiniLM embeddings. It scores candidate adjacent sentences by cosine similarity and searches for an ordering: exhaustive permutations for at most eight sentences, beam search (default width 64) above that. Each output is then checked as a multiset against its source sentences. This verifies preservation, not that the proposed order is historically or narratively correct. See [Methodology](docs/METHODOLOGY.md).
+
+### 3. Translation experiment
+
+`scripts/test_model3_indictrans2.py` uses the official IndicTransToolkit `IndicProcessor`, source code `hin_Deva`, target code `eng_Latn`, and CPU encoder-decoder inference. Sentences are passed in groups of five and postprocessed in order. The full run generated seven provisional files and a manifest for 344 sentences in 71 groups. Quality is **UNVALIDATED** and unsuitable for final use: 37 translations contain malformed `u093C` fragments, and semantic errors are present. No automatic repair was applied. See the [Model 3 audit](outputs/translation/indictrans2/model3_indictrans2_report.md).
+
+## Data and outputs
+
+The seven professor-provided raw Hindi inputs are UTF-8 plain-text files, `data/sample-1.txt` through `data/sample-7.txt`. Model 1 reads all `data/*.txt` files and writes punctuated files under `outputs/`; Model 2 writes ordered text, mappings, and run reports under `outputs/model2_ordering/`; the orchestration pipeline writes reconstructed Hindi under `outputs/pipeline_final/`. Model 3 outputs are under `outputs/translation/indictrans2/`. Sentence mappings carry sample-local stable IDs and original positions. See [Architecture](docs/ARCHITECTURE.md) for the actual paths and data flow.
+
+## Setup and usage
+
+Use PowerShell from the repository root. The examples below match the project entry points; options for scripts with a CLI were checked against their `--help` output. A suitable existing environment is required; see [Installation](docs/INSTALLATION.md) for the separate Model 3 environment and dependency files.
+
+```powershell
+# Model 1: punctuate every data/*.txt file (downloads its model/helper as needed).
+.\venv\Scripts\python.exe src\run_on_dataset.py
+
+# Model 2: run the selected MiniLM method using existing punctuated files.
+.\venv\Scripts\python.exe src\model2_ordering.py --method minilm
+
+# Full Hindi reconstruction: Model 1 then MiniLM ordering on all seven inputs.
+.\venv\Scripts\python.exe src\pipeline.py --method minilm
+
+# Optional Model 1 metrics using the saved predictions cache.
+.\venv\Scripts\python.exe evaluation\evaluate.py --skip-inference
+
+# Model 3: five-sentence experimental pilot from an ordered file.
+.\.venv_model3_indictrans2\Scripts\python.exe scripts\test_model3_indictrans2.py `
+  --input outputs\pipeline_final\sample-1_final_output.txt --count 5 `
+  --group-size 5 --device cpu `
+  --output-json outputs\translation\indictrans2\sample-1_rerun.json
+
+# Existing regression tests (the project's venv in this checkout).
+.\venv\Scripts\python.exe -m unittest discover -s evaluation -p "test_*.py" -v
 ```
 
-### Run Unit Tests
-```bash
-python -m unittest discover -s evaluation -p "test_*.py" -v
+Commands that rerun inference may overwrite corresponding output files. Model files are fetched from Hugging Face on demand; gated model access, including IndicTrans2 access acceptance, must be completed by the user. No token is stored in the repository.
+
+## Evaluation snapshot
+
+| Component | Result | Important limitation |
+|---|---|---|
+| Model 1 punctuation | Micro F1 76.06%; macro F1 70.22%; exact punctuation sequence accuracy 70.91%; word preservation 100% on 55 records | Reference annotations were AI-assisted and require validation by fluent Hindi speakers |
+| Model 2 MiniLM | Seven files; sentence counts 49, 49, 47, 50, 52, 45, 52; preservation checks passed | No authoritative ordering references, so no ordering accuracy is reported |
+| Model 3 IndicTrans2 | 344 sentences, 71 groups; 37 malformed `u093C` outputs | Other semantic errors; all English outputs UNVALIDATED; candidate rejected for final-quality use |
+| Existing regression suite | 65/65 passed in 23.074 seconds, rerun during this documentation task in the existing project `venv` | Software regression result, not proof of linguistic accuracy |
+
+## Hardware and limitations
+
+Development was reported on Windows 11 with an Intel Core i5-8365U, integrated graphics, and no NVIDIA GPU. The project target is below 1.5 GB of GPU memory per model. **GPU-memory compliance: NOT VERIFIED.** IndicTrans2's CPU benchmark reports a 4.071-second five-sentence pilot and 371.475 seconds total inference for 344 sentences; CPU RAM and downloaded file size do not imply GPU VRAM use.
+
+Other limitations include the provisional punctuation references, lack of correct sentence-order references, symmetric cosine affinity, and unvalidated/defective machine translation. The system requires fluent Hindi-English review before any translation is treated as acceptable. See [Evaluation](docs/EVALUATION.md) and [future work](docs/METHODOLOGY.md#limitations-and-next-steps).
+
+## Repository structure
+
+```text
+.
+├── README.md
+├── docs/                         # Architecture, models, methods, evaluation, setup
+├── benchmark_mbert.py            # Existing ordering benchmark utility
+├── benchmark_mbert_results.json  # Existing benchmark results
+├── benchmark_mbert.log           # Existing benchmark log (untracked local artifact)
+├── cleanup_audit.md              # Existing audit notes
+├── data/                         # sample-1.txt … sample-7.txt
+├── src/
+│   ├── punctuation_test.py       # Small Model 1 example
+│   ├── run_on_dataset.py         # Model 1 batch runner
+│   ├── model2_ordering.py        # MiniLM and mBERT ordering methods
+│   └── pipeline.py               # Model 1 → Model 2 orchestration
+├── scripts/
+│   ├── test_model3_candidate.py
+│   ├── test_model3_m2m100.py
+│   └── test_model3_indictrans2.py
+├── evaluation/
+│   ├── dataset/                   # CSV/JSONL punctuation references
+│   ├── predictions/               # Model 1 cached predictions
+│   ├── reports/                   # Metrics and classification reports
+│   ├── README.md
+│   ├── evaluate.py
+│   ├── test_model2.py
+│   └── test_pipeline.py
+├── outputs/
+│   ├── sample-*_punctuated.txt
+│   ├── model2_ordering/           # Ordered text, mappings, NSP comparisons
+│   ├── pipeline_final/            # Reconstructed Hindi and pipeline reports
+│   └── translation/
+│       ├── indictrans2/           # Pilot, report, manifest, UNVALIDATED outputs
+│       └── ...                    # Preserved Helsinki and M2M100 experiment files
+├── notebooks/                     # IndicTrans2 pilot notebook
+├── requirements.txt
+├── requirements-model3.txt
+├── requirements-model3-indictrans2.txt
+└── .gitignore
 ```
+
+The current workspace also contains the untracked local archive `git hub pusshing.zip`; it is not needed for the application or recommended for the documentation commit. Repeated sample outputs are grouped with `sample-*` patterns. Environments, caches, and model weights are omitted.
+
+## Documentation
+
+- [Architecture and data flow](docs/ARCHITECTURE.md)
+- [Model specifications and status](docs/MODELS.md)
+- [Methodology](docs/METHODOLOGY.md)
+- [Evaluation and limitations](docs/EVALUATION.md)
+- [Windows installation and commands](docs/INSTALLATION.md)
+
+## Academic integrity and reproducibility
+
+Models 1–3 are pretrained checkpoints. Sentence segmentation, MiniLM cosine scoring/search, ID mapping, evaluation alignment, and orchestration are project code; MiniLM sentence ordering is a heuristic, not a trained directional transition model. Reported metrics and integrity checks are tied to the local artifacts cited above. Punctuation labels are provisional, sentence ordering lacks gold references, translation has no reference-based score, and GPU compliance is unverified. The 65/65 regression result is a software test result, not proof of linguistic accuracy. Do not infer success from a model having executed.

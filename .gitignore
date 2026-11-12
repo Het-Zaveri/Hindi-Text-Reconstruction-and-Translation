@@ -1,7 +1,17 @@
 venv/
 .venv/
+.venv_model3/
+.venv_model3_indictrans2/
+models/
 __pycache__/
 *.pyc
 *.pyo
 .pytest_cache/
 .env
+.env.local
+.env.*.local
+.cache/huggingface/
+hf_cache/
+tmp/
+*.tmp
+*.tmp.log
